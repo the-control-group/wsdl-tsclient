@@ -105,7 +105,7 @@ function generateDefinitionFile(
             }
             // If a property is of the same type as its parent type, don't add import
             if (prop.ref.name !== definition.name) {
-                addSafeImport(definitionImports, `./${prop.ref.name}`, prop.ref.name);
+                addSafeImport(definitionImports, `./${prop.ref.name}.js`, prop.ref.name);
             }
             definitionProperties.push(createProperty(prop.name, prop.ref.name, prop.sourceName, prop.isArray));
         }
@@ -177,13 +177,13 @@ export async function generate(
                         );
                         addSafeImport(
                             clientImports,
-                            `./definitions/${method.paramDefinition.name}`,
+                            `./definitions/${method.paramDefinition.name}.js`,
                             method.paramDefinition.name
                         );
                     }
                     addSafeImport(
                         portImports,
-                        `../definitions/${method.paramDefinition.name}`,
+                        `../definitions/${method.paramDefinition.name}.js`,
                         method.paramDefinition.name
                     );
                 }
@@ -200,13 +200,13 @@ export async function generate(
                         );
                         addSafeImport(
                             clientImports,
-                            `./definitions/${method.returnDefinition.name}`,
+                            `./definitions/${method.returnDefinition.name}.js`,
                             method.returnDefinition.name
                         );
                     }
                     addSafeImport(
                         portImports,
-                        `../definitions/${method.returnDefinition.name}`,
+                        `../definitions/${method.returnDefinition.name}.js`,
                         method.returnDefinition.name
                     );
                 }
@@ -230,7 +230,7 @@ export async function generate(
                 });
             } // End of PortMethod
             if (!mergedOptions.emitDefinitionsOnly) {
-                addSafeImport(serviceImports, `../ports/${port.name}`, port.name);
+                addSafeImport(serviceImports, `../ports/${port.name}.js`, port.name);
                 servicePorts.push({
                     name: sanitizePropName(port.name),
                     isReadonly: true,
@@ -252,7 +252,7 @@ export async function generate(
         } // End of Port
 
         if (!mergedOptions.emitDefinitionsOnly) {
-            addSafeImport(clientImports, `./services/${service.name}`, service.name);
+            addSafeImport(clientImports, `./services/${service.name}.js`, service.name);
             clientServices.push({ name: sanitizePropName(service.name), type: service.name });
 
             serviceFile.addImportDeclarations(serviceImports);
